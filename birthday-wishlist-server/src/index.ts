@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import http from 'http';
@@ -30,30 +30,39 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(compression());
-// app.use('/api/users', userRouter);
-// app.use('/api/wishlists', wishlistRouter);
-// app.use('/api/gifts', giftRouter);
-
-const server = http.createServer(app);
 
 app.get('/', (req, res) => {
   res.send('Birthday Wishlist API is running');
 });
 
-server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-}
-);
-
-
-mongoose.Promise = Promise;
-mongoose.connect(MONGO_URI);
-mongoose.connection.on('error', (err) => {
-  console.error(`MongoDB connection error: ${err}`);
-  process.exit(1);
-});
 
 app.use('/', router());
+
+
+
+
+
+app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
+  console.log(err)
+  res.status(500).json({
+    error: 'Internal server error',
+    message: 'An error occured on the server'
+  })
+})
+
+
+
+// 404 error handler
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+  // mongoose.Promise = Promise;
+  mongoose.connect(MONGO_URI);
+  mongoose.connection.on('error', (err) => {
+    console.error(`MongoDB connection error: ${err}`);
+    process.exit(1);
+  });
+});
 
 export default app;
 
