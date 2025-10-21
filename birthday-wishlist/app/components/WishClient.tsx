@@ -52,7 +52,7 @@ const WishClient = ({ wishId, wishlistId }: WishClientProps) => {
     setTitle("");
     setDescription("");
     setPrice("");
-  } else if (result.dismiss === Swal.DismissReason.cancel) {
+  } else if (result.dismiss === "cancel") {
     // await addWishAlertClassName.fire({
     //   title: "Cancelled",
     //   text: "Your wishlist is safe 🙂",
