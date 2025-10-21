@@ -121,7 +121,7 @@ const Wishes = ({ wishlistId }: WishesProps) => {
       } catch (err) {
         console.error(err);
       }
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
+    } else if (result.dismiss === "cancel") {
       await deleteWishAlert.fire({
         title: "Cancelled",
         text: "Your wish is safe 🙂",
