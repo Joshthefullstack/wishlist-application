@@ -1,6 +1,5 @@
-import React from "react";
-import BirthdayBoxGif from "../../../public/m024t0224_d_gift_box_06sep22.jpg";
 import Image from "next/image";
+import BirthdayBoxGif from "../../../public/m024t0224_d_gift_box_06sep22.jpg";
 
 export interface WishItem {
   id: number;
@@ -11,7 +10,18 @@ export interface WishItem {
   giftGetters: string[];
 }
 
-export default function ViewWishesPage({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: Promise<{
+    id: string;
+  }>;
+}
+
+type tParams = Promise<{ id: string }>;
+
+
+export default async function ViewWishesPage(props: { params: tParams}) {
+  const { id } = await props.params;
+
   const data: WishItem[] = [
     {
       id: 1,
@@ -62,7 +72,7 @@ export default function ViewWishesPage({ params }: { params: { id: string } }) {
       <div>
         <div className="max-w-6xl mx-auto p-4">
           <h1 className="text-2xl font-bold mt-10">
-            View Wishes for: {decodeURIComponent(params.id)}
+            View Wishes for: {decodeURIComponent(id)}
           </h1>
         </div>
         <div className="max-w-6xl mx-auto p-4 space-y-4 mt-2">
@@ -89,7 +99,7 @@ export default function ViewWishesPage({ params }: { params: { id: string } }) {
                   height={200}
                   className="mt-5 mb-3"
                 />
-                
+
                 <span>
                   Do you wish to get this gift for this special individual,
                   please, reserve your name below.

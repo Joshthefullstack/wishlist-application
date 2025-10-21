@@ -6,15 +6,13 @@ import WishClient from "@/app/components/WishClient";
 import WishListTitle from "@/app/components/WishListTitle";
 
 
-export default function AddWishesPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const { id } = params; 
+type tParams = Promise<{ id: string }>;
+
+export default async function AddWishesPage(props: { params: tParams }) {
+  const { id } = await props.params;
 
   const wishlistId = decodeURIComponent(id);
-  
+
   return (
     <div className="">
       <div className="relative w-full h-[50vh] flex items-center justify-center text-center text-white">
@@ -34,8 +32,8 @@ export default function AddWishesPage({
         <h1 className="text-2xl font-bold mt-10">
           <WishListTitle id={wishlistId} title={"Add Wishes for"} />
         </h1>
-  
-          <WishClient wishlistId={wishlistId} />
+
+        <WishClient wishlistId={wishlistId} />
       </div>
     </div>
   );

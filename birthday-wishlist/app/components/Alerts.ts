@@ -30,7 +30,7 @@ export const deleteWL = async (
   });
 
   if (result.isConfirmed) {
-    try{
+    try {
       //  const res = await fetch(`http://localhost:5000/wishlists/${wishlistId}`, {
       //   method: "DELETE",
       //   headers: {
@@ -39,19 +39,18 @@ export const deleteWL = async (
       //   body: JSON.stringify({ userId }),
       // });
 
-      await wishlistService.deleteWishList(wishlistId, userId)
+      await wishlistService.deleteWishList(wishlistId, userId);
 
-
-        await deleteWishListAlert.fire({
-          title: "Deleted!",
-          text: "Your wishlist has been deleted.",
-          icon: "success",
-        });
-        triggerRefresh?.()
-    } catch(err){
+      await deleteWishListAlert.fire({
+        title: "Deleted!",
+        text: "Your wishlist has been deleted.",
+        icon: "success",
+      });
+      triggerRefresh?.();
+    } catch (err) {
       console.error(err);
     }
-  } else if (result.dismiss === Swal.DismissReason.cancel) {
+  } else if (result.dismiss === "cancel") {
     await deleteWishListAlert.fire({
       title: "Cancelled",
       text: "Your wishlist is safe 🙂",

@@ -39,7 +39,7 @@ const ViewWishList = () => {
         {/* Content Section */}
         <ProfileCard />
 
-        <Wishlists jsonWebToken={jsonWebToken} />
+        <Wishlists />
       </div>
     </div>
   );

@@ -3,13 +3,13 @@ import BirthdayBoxGif from "../../../../../public/m024t0224_d_gift_box_06sep22.j
 import WishClient from "@/app/components/WishClient";
 import WishListTitle from "@/app/components/WishListTitle";
 
-export default function EditWishPage({
-  params,
-}: {
-  params: { id: string; wishId: string };
-}) {
-  const wishlistId = decodeURIComponent(params.id);
-  const wishId = decodeURIComponent(params.wishId);
+type tParams = Promise<{ id: string; wishItemId: string }>;
+
+export default async function EditWishPage(props: { params: tParams }) {
+  const { id } = await props.params;
+  const { wishItemId } = await props.params;
+  const wishlistId = decodeURIComponent(id);
+  const wishId = decodeURIComponent(wishItemId);
 
   return (
     <div>

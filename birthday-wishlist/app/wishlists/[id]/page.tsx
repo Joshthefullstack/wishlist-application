@@ -7,14 +7,10 @@ import { log } from "node:console";
 import WishListTitle from "@/app/components/WishListTitle";
 
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
+type tParams = Promise<{ id: string }>;
 
-const Page = ({ params }: PageProps) => {
-  const { id } = (params); 
+const Page = async (props: { params: tParams }) => {
+  const { id } = await props.params;
 
   const wishlistId = decodeURIComponent(id);
 
@@ -34,7 +30,7 @@ const Page = ({ params }: PageProps) => {
       </div>
 
       <div>
-       <WishListTitle id={wishlistId} title={"Wishes for"}/>
+        <WishListTitle id={wishlistId} title={"Wishes for"} />
       </div>
 
       <Wishes wishlistId={wishlistId} />
