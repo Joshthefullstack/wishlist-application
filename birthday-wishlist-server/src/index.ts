@@ -1,15 +1,11 @@
 import express, { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import http from 'http';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import dotenv from 'dotenv';
-// import { userRouter } from './routes/userRoutes';
-// import { wishlistRouter } from './routes/wishlistRoutes';
-// import { giftRouter } from './routes/giftRoutes';
 
 import router from '../routers/index'
 
@@ -29,14 +25,11 @@ const allowedOrigins = [
 app.use(helmet());
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // allow server-to-server
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      } else {
-        return callback(new Error("CORS not allowed for this origin"), false);
-      }
-    },
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://wishlist-application-frontend.onrender.com",
+    ],
     credentials: true,
   })
 );
