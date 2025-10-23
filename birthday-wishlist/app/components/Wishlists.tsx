@@ -196,6 +196,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { deleteWL } from "./Alerts";
 import { wishlistService } from "../services/wishlistService";
+import ShareButton from "./ShareButton";
 
 type WishlistsProps = {
   jsonWebToken: string;
@@ -315,12 +316,20 @@ export default function Wishlists() {
                                 }
                               />
                             </button>
-
+                            {/* When they click this generate, it is just going to copy a link to the wiishlists for them */}
                             <Link
-                              href={`/wishlists/${wishlist.title}/magic`}
+                              href={``}
                               onClick={(e) => e.stopPropagation()}
                               className="p-1.5 sm:p-2 rounded-full hover:bg-purple-100 text-purple-600">
-                              <Wand2 size={18} className="sm:w-5 sm:h-5" />
+                              {/* <Wand2 size={18} className="sm:w-5 sm:h-5" /> */}
+
+                              <ShareButton
+                                wishlistId={wishlist._id}
+                                title={wishlist.title}
+                                icon={
+                                  <Wand2 size={18} className="sm:w-5 sm:h-5" />
+                                }
+                              />
                             </Link>
 
                             <button

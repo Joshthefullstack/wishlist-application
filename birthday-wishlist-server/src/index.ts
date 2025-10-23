@@ -18,14 +18,30 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || '';
 
+const allowedOrigins = [
+  // "https://your-frontend-name.onrender.com", // your deployed frontend URL
+  "http://localhost:3000", // optional, for local testing
+  "http://localhost:3001",
+];
+
+
 // Middleware
 app.use(helmet());
-app.use(cors(
-  ({
-    origin: "http://localhost:3000",
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // allow server-to-server
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("CORS not allowed for this origin"), false);
+      }
+    },
     credentials: true,
   })
-));
+);
+
+app.options("*", cors());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -37,8 +53,6 @@ app.get('/', (req, res) => {
 
 
 app.use('/', router());
-
-
 
 
 
