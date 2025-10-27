@@ -189,5 +189,6 @@ export default {
     getWishesForUser,
     updateWish,
     deleteWish,
-    getWishItemById
+    getWishItemById,
+    updateWishGifters
 };

@@ -27,7 +27,7 @@ export const wishService = {
     imgURL: string,
     wishlistId: string,
     gifters: Array<string>,
-    userId: string, 
+    userId: string,
     wishId: string
   ) => {
     return api(`/wishes/${wishId}`, {
@@ -40,6 +40,16 @@ export const wishService = {
     return api(`/wishes/delete/${wishId}`, {
       method: "DELETE",
       body: { wishlistId },
+    });
+  },
+
+  editWishGifter: async (
+    gifters: string,
+    wishId: string
+  ) => {
+    return api(`/wishes/giftGetter/${wishId}`, {
+      method: "PATCH",
+      body: { gifters },
     });
   },
 };

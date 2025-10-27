@@ -15,5 +15,5 @@ export default (router: express.Router) => {
   router.get("/wishes/getWish/:wishId", getWishItemById);
   router.put("/wishes/:wishId", updateWish);
   router.delete("/wishes/delete/:wishId", deleteWish);
-  router.patch("/wishes/gifters", updateWishGifters)
+  router.patch("/wishes/giftGetter/:wishId", updateWishGifters)
 };

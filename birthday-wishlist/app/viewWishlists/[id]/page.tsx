@@ -7,7 +7,7 @@ import { wishlistService } from "@/app/services/wishlistService";
 import ViewWishes from "@/app/components/ViewWishes";
 
 export interface WishItem {
-  id: number;
+  _id: string;
   title: string;
   description: string;
   price: string;

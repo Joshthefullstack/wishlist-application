@@ -1,24 +1,21 @@
-"use client"
-import React, { useEffect, useState } from 'react'
-import { WishItem } from '../viewWishlists/[id]/page';
-import Image from 'next/image';
-import { wishService } from '../services/wishService';
+"use client";
+import React, { useEffect, useState } from "react";
+import { WishItem } from "../viewWishlists/[id]/page";
+import Image from "next/image";
+import { wishService } from "../services/wishService";
 
 type WishesProps = {
   wishlistId: string;
 };
 
-
 const ViewWishes = ({ wishlistId }: WishesProps) => {
-
-   const [wishes, setWishes] = useState<WishItem[]>([]);
+  const [wishes, setWishes] = useState<WishItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-
- useEffect(() => {
+  useEffect(() => {
     const fetchWishes = async () => {
       try {
-
         const wishes = await wishService.getWishes(wishlistId);
         // console.log("Updated wwishlists", data);
         setWishes(wishes);
@@ -32,22 +29,34 @@ const ViewWishes = ({ wishlistId }: WishesProps) => {
     fetchWishes();
   }, [wishlistId]);
 
-  const [gifterName, setGifterName] = useState("")
+  const [gifterName, setGifterName] = useState("");
 
-  const addGifter = () => {
+  const addGifter = async (wishId: string) => {
+    setError("");
 
-  }
+    try {
+      const updateGifter = await wishService.editWishGifter(gifterName, wishId);
+
+      if (updateGifter.message === "") {
+        alert("Error trying to update gifter");
+      }
+      alert("Gifter has been added");
+    } catch (err) {
+      console.error("Wishlist error:", err);
+      setError("Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // I also need to work on the functionality of adding the gift getters name to the list of wishes
 
-
-   if (loading)
-     return (
-       <div className="flex justify-center items-center h-60 text-gray-500">
-         Loading wishes...
-       </div>
-     );
-
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-60 text-gray-500">
+        Loading wishes...
+      </div>
+    );
 
   return (
     <div>
@@ -56,7 +65,7 @@ const ViewWishes = ({ wishlistId }: WishesProps) => {
           wishes.map((wish) => (
             <div
               className="collapse collapse-arrow bg-slate-100 border border-base-300"
-              key={wish.id}>
+              key={wish._id}>
               <input type="radio" name="my-accordion-2" />
               <div className="collapse-title font-semibold text-blue-900">
                 {wish.title}
@@ -86,9 +95,19 @@ const ViewWishes = ({ wishlistId }: WishesProps) => {
                     type="text"
                     placeholder="Reserve Gift"
                     className="border bg-gray-600 text-white  p-3 rounded w-[600px]"
+                    onChange={(e) => {
+                      setGifterName(e.target.value);
+                    }}
                   />
-                  <button className="btn btn-primary" onClick={() => {addGifter}}>Add Name</button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      addGifter(wish._id);
+                    }}>
+                    Add Name
+                  </button>
                 </div>
+                <p>{error}</p>
               </div>
             </div>
           ))
@@ -105,4 +124,4 @@ const ViewWishes = ({ wishlistId }: WishesProps) => {
   );
 };
 
-export default ViewWishes
+export default ViewWishes;
