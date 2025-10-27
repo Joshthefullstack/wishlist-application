@@ -127,9 +127,9 @@ export const updateWishGifters = async (
 ) => {
   try {
     const wishId = req.params.wishId;
-    const { gifterName } = req.body;
+    const { gifter } = req.body;
 
-    if (!gifterName) {
+    if (!gifter) {
       return res.status(400).json({ message: "Gifter name is required" });
     }
 
@@ -139,7 +139,7 @@ export const updateWishGifters = async (
     }
 
     // ✅ Prevent duplicates (add only if not already in the array)
-    if (wish.gifters.includes(gifterName)) {
+    if (wish.gifters.includes(gifter)) {
       return res
         .status(400)
         .json({ message: "Gifter already reserved this wish" });
@@ -147,7 +147,7 @@ export const updateWishGifters = async (
 
     // Update only the gifters field
     const updatedWish = await updateWishById(wishId, {
-      gifters: [...wish.gifters, gifterName],
+      gifters: [...wish.gifters, gifter],
     });
 
     return res.status(200).json({
