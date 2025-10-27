@@ -152,6 +152,15 @@ const Wishes = ({ wishlistId }: WishesProps) => {
   // so for the person viewing the wishes, they can write down their name that they want to get this person this gift, and when they reserve their name.
   // And when the owner of the account logs in, they can see the number of people who have reserved to get them the gifts.
 
+
+   if (loading)
+     return (
+       <div className="flex justify-center items-center h-60 text-gray-500">
+         Loading wishlists...
+       </div>
+     );
+
+
   return (
     <div className="max-w-6xl mx-auto p-4 space-y-4 mt-14">
       {wishes.length > 0 ? (

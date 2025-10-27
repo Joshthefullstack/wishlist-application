@@ -10,13 +10,6 @@ type Props = {
 
 export default function ShareButton({ wishlistId, title, icon }: Props) {
   const buildUrl = () => {
-    // Use id for reliability. If you want prettier slugs you can include them:
-    // const slug = title ? title.replace(/\s+/g, "-").toLowerCase() : "";
-    // return `${window.location.origin}/viewWishlists/${wishlistId}-${encodeURIComponent(slug)}`;
-    // return `${window.location.origin}/viewWishlists/${encodeURIComponent(
-    //   wishlistId
-    // )}`;
-
     const slug = title
       ? title
           .toLowerCase()
@@ -28,37 +21,39 @@ export default function ShareButton({ wishlistId, title, icon }: Props) {
     )}-${encodeURIComponent(slug)}`;
   };
 
-  const copyToClipboard = async () => {
-    const url = buildUrl();
-    try {
-      if (navigator.share) {
-        // optional: open native share sheet on mobile
-        await navigator.share({
-          title: title ?? "Wishlist",
-          text: "View my wishlist",
-          url,
-        });
-        return;
-      }
-      // primary method
-      await navigator.clipboard.writeText(url);
-      alert("Link copied to clipboard"); // replace with nicer UI if desired
-    } catch (err) {
-      // fallback: create temporary input, select, copy
-      const input = document.createElement("input");
-      input.value = url;
-      document.body.appendChild(input);
-      input.select();
-      try {
-        document.execCommand("copy");
-        alert("Link copied to clipboard (fallback)");
-      } catch {
-        prompt("Copy this link", url); // last resort
-      } finally {
-        document.body.removeChild(input);
-      }
+const copyToClipboard = async () => {
+  const url = buildUrl();
+
+  try {
+    // Try to write directly to clipboard first
+    await navigator.clipboard.writeText(url);
+    alert("Link copied to clipboard!");
+
+    // (Optional) You can still offer share *after* successful copy
+    if (navigator.share) {
+      await navigator.share({
+        title: title ?? "Wishlist",
+        text: "View my wishlist",
+        url,
+      });
     }
-  };
+  } catch (err) {
+    // fallback: old-school method
+    const input = document.createElement("input");
+    input.value = url;
+    document.body.appendChild(input);
+    input.select();
+    try {
+      document.execCommand("copy");
+      alert("Link copied to clipboard (fallback)");
+    } catch {
+      prompt("Copy this link", url);
+    } finally {
+      document.body.removeChild(input);
+    }
+  }
+};
+
 
   return (
     <button onClick={copyToClipboard} className="btn">

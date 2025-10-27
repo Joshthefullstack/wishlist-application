@@ -119,6 +119,48 @@ export const updateWish = async (
   }
 };
 
+
+
+export const updateWishGifters = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const wishId = req.params.wishId;
+    const { gifterName } = req.body;
+
+    if (!gifterName) {
+      return res.status(400).json({ message: "Gifter name is required" });
+    }
+
+    const wish = await getWishById(wishId);
+    if (!wish) {
+      return res.status(404).json({ message: "Wish not found" });
+    }
+
+    // ✅ Prevent duplicates (add only if not already in the array)
+    if (wish.gifters.includes(gifterName)) {
+      return res
+        .status(400)
+        .json({ message: "Gifter already reserved this wish" });
+    }
+
+    // Update only the gifters field
+    const updatedWish = await updateWishById(wishId, {
+      gifters: [...wish.gifters, gifterName],
+    });
+
+    return res.status(200).json({
+      message: "Gifter added successfully",
+      wish: updatedWish,
+    });
+  } catch (error) {
+    console.error("Error updating gifters:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 export const deleteWish = async (
   req: express.Request,
   res: express.Response

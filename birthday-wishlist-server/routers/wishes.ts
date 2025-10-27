@@ -6,6 +6,7 @@ import {
   getWishesForUser,
   getWishItemById,
   updateWish,
+  updateWishGifters,
 } from "../controllers/wishes";
 
 export default (router: express.Router) => {
@@ -14,4 +15,5 @@ export default (router: express.Router) => {
   router.get("/wishes/getWish/:wishId", getWishItemById);
   router.put("/wishes/:wishId", updateWish);
   router.delete("/wishes/delete/:wishId", deleteWish);
+  router.patch("/wishes/gifters", updateWishGifters)
 };
