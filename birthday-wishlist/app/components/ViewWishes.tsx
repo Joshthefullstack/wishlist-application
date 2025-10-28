@@ -29,13 +29,13 @@ const ViewWishes = ({ wishlistId }: WishesProps) => {
     fetchWishes();
   }, [wishlistId]);
 
-  const [gifterName, setGifterName] = useState("");
+  const [gifter, setGifter] = useState("");
 
   const addGifter = async (wishId: string) => {
     setError("");
 
     try {
-      const updateGifter = await wishService.editWishGifter(gifterName, wishId);
+      const updateGifter = await wishService.editWishGifter(gifter, wishId);
 
       if (updateGifter.message === "") {
         alert("Error trying to update gifter");
@@ -96,7 +96,7 @@ const ViewWishes = ({ wishlistId }: WishesProps) => {
                     placeholder="Reserve Gift"
                     className="border bg-gray-600 text-white  p-3 rounded w-[600px]"
                     onChange={(e) => {
-                      setGifterName(e.target.value);
+                      setGifter(e.target.value);
                     }}
                   />
                   <button

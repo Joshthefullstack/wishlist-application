@@ -44,12 +44,12 @@ export const wishService = {
   },
 
   editWishGifter: async (
-    gifters: string,
+    gifter: string,
     wishId: string
   ) => {
     return api(`/wishes/giftGetter/${wishId}`, {
       method: "PATCH",
-      body: { gifters },
+      body: { gifter },
     });
   },
 };
