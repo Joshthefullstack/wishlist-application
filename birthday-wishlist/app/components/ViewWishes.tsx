@@ -41,6 +41,7 @@ const ViewWishes = ({ wishlistId }: WishesProps) => {
         alert("Error trying to update gifter");
       }
       alert("Gifter has been added");
+      setGifter("");
     } catch (err) {
       console.error("Wishlist error:", err);
       setError("Something went wrong.");

@@ -1,22 +1,25 @@
-import {Request, Response, NextFunction} from "express";
+import { Request, Response, NextFunction } from "express";
 
 import { getUserByEmail, createUser } from "../services/users";
 import { random, authentication } from "../utils/generate";
+import { BadRequestError, ConflictError } from "../middlewares/errorhandler";
 
-export const register = async (req: Request, res: Response, next: NextFunction) => {
+export const register = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
+      throw new BadRequestError("Email and password are required");
     }
 
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
-      return res.status(409).json({ message: "Email is already in use" });
+      throw new ConflictError("Email is already in use");
     }
 
     const salt = random();
@@ -30,24 +33,24 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       },
     });
 
-    // generic error handler
-    return res
-      .status(201)
-      .json(user)
-      .end();
+    return res.status(201).json(user).end();
   } catch (error) {
-   next(error)
+    next(error);
   }
 };
 
-
-export const login = async (req: Request, res: Response, next: NextFunction) => {
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
+      // return res
+      //   .status(400)
+      //   .json({ message: "Email and password are required" });
+      throw new BadRequestError("Email and password are required");
     }
 
     const user = await getUserByEmail(email).select(
@@ -90,6 +93,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       })
       .end();
   } catch (error) {
-    next(error)
+    next(error);
   }
 };

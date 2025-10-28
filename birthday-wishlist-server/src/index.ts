@@ -52,6 +52,13 @@ app.get("/", (req, res) => {
 
 app.use("/", router());
 
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.status(404).json({
+    error: "Not Found",
+    message: "The requested resource could not be found",
+  });
+});
+
 app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
   console.log(err);
   res.status(500).json({
