@@ -118,6 +118,7 @@ const WishClient = ({ wishId, wishlistId }: WishClientProps) => {
     formData.append("userId", userId);
 
     if (image) {
+      console.log(image)
       formData.append("img", image); // must match multer field name
     }
 
@@ -180,7 +181,11 @@ const WishClient = ({ wishId, wishlistId }: WishClientProps) => {
           type="file"
           accept="image/*"
           className="file-input file-input-primary"
-          onChange={() => {handleFileChange}}
+          onChange={(e) => {
+            if (e.target.files && e.target.files[0]) {
+              setImage(e.target.files[0]); // File object
+            }
+          }}
         />
 
         <div className="flex gap-4 justify-end">

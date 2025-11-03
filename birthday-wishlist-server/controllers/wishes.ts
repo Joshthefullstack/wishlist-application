@@ -27,9 +27,9 @@ export const createNewWish = async (
     }
 
     let imgURL = "";
-    if (req.file) {
-      imgURL = `/uploads/${req.file.filename}`; // relative path
-    }
+    // if (req.file) {
+    //   imgURL = `/uploads/${req.file.filename}`; // relative path
+    // }
 
     const newWish = await createWish({
       title,
