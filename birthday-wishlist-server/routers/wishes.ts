@@ -7,8 +7,8 @@ import {
   getWishItemById,
   updateWish,
   updateWishGifters,
-} from "../controllers/wishes";
-import {upload} from "../middlewares/imageHandler"
+} from "../controllers/wishes.js";
+import {upload} from "../middlewares/imageHandler.js"
 
 export default (router: express.Router) => {
   router.post("/wishes/create", upload.single("img"),createNewWish);

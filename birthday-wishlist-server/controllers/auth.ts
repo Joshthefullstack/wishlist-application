@@ -57,7 +57,7 @@ export const login = async (
       "+authentication.password +authentication.salt +authentication.sessionToken"
     );
 
-    if (!user) {
+    if (!user || !user.authentication) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 

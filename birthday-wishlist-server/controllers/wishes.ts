@@ -1,10 +1,9 @@
 import express, { NextFunction } from "express";
 
-import { createWish, deleteWishById, getWishById, getWishesByWishlistId, updateWishById } from "../services/wishes";
-import { getUserById } from "../services/users";
-import { getWishlistById, removeWishlistWish, updateWishlistWish } from "../services/wishlists";
-import { getWishListsById } from "./wishlists";
-import { BadRequestError, NotFoundError, ValidationError, ConflictError } from "../middlewares/errorhandler";
+import { createWish, deleteWishById, getWishById, getWishesByWishlistId, updateWishById } from "../services/wishes.js";
+import { getUserById } from "../services/users.js";
+import { getWishlistById, removeWishlistWish, updateWishlistWish } from "../services/wishlists.js";
+import { BadRequestError, NotFoundError, ValidationError, ConflictError } from "../middlewares/errorhandler.js";
 
 export const createNewWish = async (
   req: express.Request,
@@ -12,7 +11,6 @@ export const createNewWish = async (
   next: NextFunction
 ) => {
   try {
-    // const userId = req.params.userId;
     const { title, description, price, gifters, userId, wishlistId } = req.body;
     if (!title) {
       throw new BadRequestError("Title is Required")
@@ -33,8 +31,6 @@ export const createNewWish = async (
       imgURL = `/uploads/${req.file.filename}`; // relative path
     }
 
-    
-
     const newWish = await createWish({
       title,
       description,
@@ -49,8 +45,6 @@ export const createNewWish = async (
 
     return res.status(201).json(newWish);
   } catch (error) {
-    // console.error(error);
-    // return res.status(500).json({ message: "Internal server error" });
     next(error)
   }
 };

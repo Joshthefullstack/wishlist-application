@@ -1,4 +1,4 @@
-import { UserModel } from "../models/users";
+import { UserModel } from "../models/users.js";
 import mongoose from "mongoose"
 
 export const getUsers = () => UserModel.find();
