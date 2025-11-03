@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 import Link from "next/link";
 import { wishService } from "../services/wishService";
 
-
 export interface WishItem {
   _id: string;
   title: string;
@@ -22,35 +21,6 @@ type WishesProps = {
 };
 
 const Wishes = ({ wishlistId }: WishesProps) => {
-  // const data : WishItem[] = [
-  //   {
-  //     id: 1,
-  //     title: "Barca Jersey",
-  //     description: "Because Barca is the best club in the world, and why not?",
-  //     price: "20,000",
-  //     imgUrl: "/DSC08725-700x700.jpg",
-  //     giftGetters: ["Nihel"],
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Google Pixel 9",
-  //     description:
-  //       "My old phone is spoilt and new, a new phone would literally make me the happiest person right now, I can perform a lot of more extensive task on it.",
-  //     price: "1,050,000",
-  //     imgUrl: "/1.jpg",
-  //     giftGetters: ["Uncle Kunle"],
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Dr. Martins Shoes",
-  //     description:
-  //       "New age means coming in with new swag, I can't be growing up and my style does not change, a Dr. Martins Shoes would go with my corporate outfits",
-  //     price: "30,000",
-  //     imgUrl: "/1 (1).jpg",
-  //     giftGetters: [""],
-  //   },
-  // ];
-
   const [userId, setUserId] = useState<string>("");
   const router = useRouter();
   const [refreshKey, setRefreshKey] = useState(0);
@@ -73,7 +43,7 @@ const Wishes = ({ wishlistId }: WishesProps) => {
       setUserId(storedUserId);
     }
   }, [router]);
-  // data not refreshing after adding
+
   const [wishes, setWishes] = useState<WishItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -104,13 +74,16 @@ const Wishes = ({ wishlistId }: WishesProps) => {
 
     if (result.isConfirmed) {
       try {
-        const res = await fetch(`http://localhost:5000/wishes/delete/${wishId}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ wishlistId }),
-        });
+        const res = await fetch(
+          `http://localhost:5000/wishes/delete/${wishId}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ wishlistId }),
+          }
+        );
 
         await deleteWishAlert.fire({
           title: "Deleted!",
@@ -133,7 +106,6 @@ const Wishes = ({ wishlistId }: WishesProps) => {
   useEffect(() => {
     const fetchWishes = async () => {
       try {
-
         const wishes = await wishService.getWishes(wishlistId);
         // console.log("Updated wwishlists", data);
         setWishes(wishes);
@@ -152,14 +124,12 @@ const Wishes = ({ wishlistId }: WishesProps) => {
   // so for the person viewing the wishes, they can write down their name that they want to get this person this gift, and when they reserve their name.
   // And when the owner of the account logs in, they can see the number of people who have reserved to get them the gifts.
 
-
-   if (loading)
-     return (
-       <div className="flex justify-center items-center h-60 text-gray-500">
-         Loading wishlists...
-       </div>
-     );
-
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-60 text-gray-500">
+        Loading wishlists...
+      </div>
+    );
 
   return (
     <div className="max-w-6xl mx-auto p-4 space-y-4 mt-14">
@@ -167,7 +137,8 @@ const Wishes = ({ wishlistId }: WishesProps) => {
         wishes.map((wish) => (
           <div
             className="collapse collapse-arrow bg-slate-100 border border-base-300"
-            key={wish._id}>
+            key={wish._id}
+          >
             <input type="radio" name="my-accordion-2" />
             <div className="collapse-title font-semibold text-blue-900">
               {wish.title}
@@ -188,7 +159,7 @@ const Wishes = ({ wishlistId }: WishesProps) => {
                 </span>
               ))}
               <Image
-                src={wish.imgUrl}
+                src={`http://localhost:4000${wish.imgUrl}`}
                 alt={wish.title}
                 width={200}
                 height={200}
@@ -197,14 +168,16 @@ const Wishes = ({ wishlistId }: WishesProps) => {
               <div className="flex gap-3 mt-3">
                 <button
                   className="btn btn-warning"
-                  onClick={() => goToEdit(wish._id)}>
+                  onClick={() => goToEdit(wish._id)}
+                >
                   Edit
                 </button>
                 <button
                   className="btn btn-error"
                   onClick={() => {
                     deleteWish(wish._id, wishlistId, triggerRefresh);
-                  }}>
+                  }}
+                >
                   Delete
                 </button>
               </div>
@@ -227,14 +200,15 @@ const Wishes = ({ wishlistId }: WishesProps) => {
           icon={<Plus size={20} />}
         /> */}
 
-        <Link href={"/wishlists"} className="btn btn-error">Go Back</Link>
+        <Link href={"/wishlists"} className="btn btn-error">
+          Go Back
+        </Link>
       </div>
     </div>
   );
 };
 
 export default Wishes;
-
 
 // Final sprint of project
 // - Generating link

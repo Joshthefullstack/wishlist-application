@@ -5,34 +5,17 @@ export const wishService = {
     return api(`/wishes/${wishlistId}`);
   },
 
-  addWish: async (
-    title: string,
-    description: string,
-    price: string,
-    imgURL: string,
-    wishlistId: string,
-    gifters: Array<string>,
-    userId: string
-  ) => {
+  addWish: async (formData: FormData) => {
     return api("/wishes/create", {
       method: "POST",
-      body: { title, description, price, imgURL, wishlistId, gifters, userId },
+      body: formData,
     });
   },
 
-  editWish: async (
-    title: string,
-    description: string,
-    price: string,
-    imgURL: string,
-    wishlistId: string,
-    gifters: Array<string>,
-    userId: string,
-    wishId: string
-  ) => {
+  editWish: async (formData: FormData, wishId: string) => {
     return api(`/wishes/${wishId}`, {
       method: "PUT",
-      body: { title, description, price, imgURL, wishlistId, gifters, userId },
+      body: formData,
     });
   },
 
@@ -43,10 +26,7 @@ export const wishService = {
     });
   },
 
-  editWishGifter: async (
-    gifter: string,
-    wishId: string
-  ) => {
+  editWishGifter: async (gifter: string, wishId: string) => {
     return api(`/wishes/giftGetter/${wishId}`, {
       method: "PATCH",
       body: { gifter },

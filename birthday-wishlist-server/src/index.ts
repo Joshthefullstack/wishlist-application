@@ -6,8 +6,9 @@ import dotenv from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import mongoose from "mongoose";
+import path from "path";
 
-import router from "../routers/index";
+import router from "../routers/index.js";
 
 dotenv.config();
 const app = express();
@@ -40,6 +41,9 @@ app.use(
     credentials: true
   }),
 );
+
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+// for my images
 
 app.use(express.json());
 app.use(bodyParser.json());

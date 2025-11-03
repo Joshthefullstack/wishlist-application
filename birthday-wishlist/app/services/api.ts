@@ -10,14 +10,25 @@ type ApiOptions = {
 };
 
 export async function api(endpoint: string, options: ApiOptions = {}) {
+  const isFormData = options.body instanceof FormData;
+
+  const headers: Record<string, string> = {
+    ...(options.headers || {}),
+  };
+
+  if (!isFormData) {
+    headers["Content-Type"] = "application/json";
+  }
+
   const res = await fetch(`${API_URL}${endpoint}`, {
     method: options.method || "GET",
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {}),
-    },
+    headers,
     credentials: options.credentials || "include",
-    body: options.body ? JSON.stringify(options.body) : undefined,
+    body: options.body
+      ? isFormData
+        ? options.body
+        : JSON.stringify(options.body)
+      : undefined,
   });
 
   if (!res.ok) {

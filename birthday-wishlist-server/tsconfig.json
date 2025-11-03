@@ -3,6 +3,7 @@
     "module": "NodeNext",
     "target": "ES2020",
     "moduleResolution": "NodeNext",
+    "types": ["node"],
     "baseUrl": "src",
     "outDir": "./dist",
     "noImplicitAny": true,

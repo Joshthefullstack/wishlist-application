@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "type": "module",
   "dependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.9",
@@ -27,11 +28,16 @@
     "helmet": "^8.1.0",
     "joi": "^18.0.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.19.0"
+    "mongoose": "^8.19.0",
+    "multer": "^2.0.2",
+    "path": "^0.12.7",
+    "url": "^0.11.4"
   },
   "devDependencies": {
     "@types/compression": "^1.8.1",
     "@types/express": "^5.0.3",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.10.0",
     "body-parser": "^2.2.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",

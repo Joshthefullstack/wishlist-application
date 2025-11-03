@@ -8,12 +8,13 @@ import {
   updateWish,
   updateWishGifters,
 } from "../controllers/wishes";
+import {upload} from "../middlewares/imageHandler"
 
 export default (router: express.Router) => {
-  router.post("/wishes/create", createNewWish);
+  router.post("/wishes/create", upload.single("img"),createNewWish);
   router.get("/wishes/:wishlistId", getWishesForUser);
   router.get("/wishes/getWish/:wishId", getWishItemById);
   router.put("/wishes/:wishId", updateWish);
   router.delete("/wishes/delete/:wishId", deleteWish);
-  router.patch("/wishes/giftGetter/:wishId", updateWishGifters)
+  router.patch("/wishes/giftGetter/:wishId", updateWishGifters);
 };

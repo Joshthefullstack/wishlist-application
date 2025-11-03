@@ -13,7 +13,7 @@ export const createNewWish = async (
 ) => {
   try {
     // const userId = req.params.userId;
-    const { title, description, price, gifters, imgURL, userId, wishlistId } = req.body;
+    const { title, description, price, gifters, userId, wishlistId } = req.body;
     if (!title) {
       throw new BadRequestError("Title is Required")
     }
@@ -21,14 +21,18 @@ export const createNewWish = async (
     const user = await getUserById(userId);
     if (!user) {
       throw new NotFoundError("User not Found")
-      // return res.status(404).json({ message: "User not found" });
     }
 
     const wishlist = await getWishlistById(wishlistId);
     if (!wishlist) {
       throw new NotFoundError("Wishlist not Found");
-      // return res.status(404).json({ message: "Wishlist not found" });
     }
+
+    let imgURL = "";
+    if (req.file) {
+      imgURL = `/uploads/${req.file.filename}`; // relative path
+    }
+
     
 
     const newWish = await createWish({
