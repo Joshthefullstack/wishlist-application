@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { authentication } from "../utils/generate";
 
 const UserSchema = new mongoose.Schema({
   email: {

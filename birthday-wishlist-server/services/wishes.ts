@@ -1,4 +1,4 @@
-import { WishModel } from "../models/wishes";
+import { WishModel } from "../models/wishes.js";
 
 export const getWishes = () => WishModel.find().populate("user", "email");
 

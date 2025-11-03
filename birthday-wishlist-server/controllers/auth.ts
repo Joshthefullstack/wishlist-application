@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 
-import { getUserByEmail, createUser } from "../services/users";
-import { random, authentication } from "../utils/generate";
-import { BadRequestError, ConflictError } from "../middlewares/errorhandler";
+import { getUserByEmail, createUser } from "../services/users.js";
+import { random, authentication } from "../utils/generate.js";
+import { BadRequestError, ConflictError } from "../middlewares/errorhandler.js";
 
 export const register = async (
   req: Request,

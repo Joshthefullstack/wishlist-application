@@ -1,6 +1,6 @@
 import express from "express";
 
-import { createNewWishlist, deleteWishlist, getWishListsById, getWishlistsForUser, updateWishList } from "../controllers/wishlists";
+import { createNewWishlist, deleteWishlist, getWishListsById, getWishlistsForUser, updateWishList } from "../controllers/wishlists.js";
 
 export default (router: express.Router) => {
   router.post('/wishlists/create', createNewWishlist); 

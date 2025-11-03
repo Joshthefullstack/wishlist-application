@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { WishListModel } from '../models/wishlist';
+import { WishListModel } from '../models/wishlist.js';
 
 
 
