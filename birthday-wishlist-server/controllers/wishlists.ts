@@ -1,8 +1,7 @@
 import express from 'express';
 
-import { createWishlist, deleteWishlistById, getWishlistById, getWishlistsByUserId, updateWishlistById } from '../services/wishlists';
-import { getUserById, removeUserWishlist, updateUserWishlist } from '../services/users';
-import UserModel from '../models/users';
+import { createWishlist, deleteWishlistById, getWishlistById, getWishlistsByUserId, updateWishlistById } from '../services/wishlists.js';
+import { getUserById, removeUserWishlist, updateUserWishlist } from '../services/users.js';
 
 export const createNewWishlist = async (req: express.Request, res: express.Response) => {
   try {
