@@ -33,7 +33,7 @@ export async function api(endpoint: string, options: ApiOptions = {}) {
 
   if (!res.ok) {
     const errorText = await res.text();
-    throw new Error(`API error: ${res.status} - ${errorText}`);
+    throw new Error(`${errorText}`);
   }
 
   return res.json();
