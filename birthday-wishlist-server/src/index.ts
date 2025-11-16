@@ -28,6 +28,7 @@ const allowedOrigins = [
 const origins = [
   "http://localhost:3000",
   "http://localhost:3001",
+  "http://localhost:3002",
   "https://wishlist-application-frontend.onrender.com",
   "https://wishlist-application-v1.onrender.com",
 ];
