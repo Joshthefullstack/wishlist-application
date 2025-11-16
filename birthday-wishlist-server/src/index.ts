@@ -29,6 +29,7 @@ const origins = [
   "http://localhost:3000",
   "http://localhost:3001",
   "https://wishlist-application-frontend.onrender.com",
+  "https://wishlist-application-v1.onrender.com",
 ];
 
 // Middleware
