@@ -34,9 +34,9 @@ export default function LoginClient() {
         localStorage.setItem("userId", user._id)
         router.push("/wishlists"); //
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Login error:", err);
-      setError("Network error. Please check your connection.");
+      setError(err.message);
     } finally {
       setLoading(false);
     }
